@@ -1,0 +1,20 @@
+{
+  "name": "cron-api",
+  "version": "1.0.0",
+  "description": "Template repository for a standard express application",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "dependencies": {
+    "axios": "^1.6.3",
+    "cron": "^3.1.6"
+  }
+}

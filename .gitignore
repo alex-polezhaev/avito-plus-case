@@ -1,0 +1,24 @@
+# deps / build
+node_modules/
+dist/
+build/
+coverage/
+# secrets — NEVER commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+auth.json
+**/auth/*.json
+!**/auth/*.example.json
+config.local.js
+# runtime data
+data/
+db-data/
+logs/
+*.log
+# OS
+.DS_Store

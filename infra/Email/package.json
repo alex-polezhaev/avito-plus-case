@@ -1,0 +1,22 @@
+{
+  "name": "express-boilerplate",
+  "version": "1.0.0",
+  "description": "Template repository for a standard express application",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.0",
+    "axios": "^1.6.3",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  }
+}

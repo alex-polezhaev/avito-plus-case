@@ -1,0 +1,4 @@
+.draggableItem {
+  cursor: pointer;
+  display: inline-block;
+}

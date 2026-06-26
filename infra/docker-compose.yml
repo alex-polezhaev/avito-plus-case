@@ -1,0 +1,142 @@
+version: "3.8"
+
+services:
+  auth:
+    container_name: auth
+    build:
+      context: ./Auth
+      dockerfile: Dockerfile
+    command: npm start
+    env_file:
+      - .env
+    restart: always
+
+  avito:
+    container_name: avito
+    build:
+      context: ./Avito
+      dockerfile: Dockerfile
+    command: npm start
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - './Avito/server/reportsJson:/app/server/reportsJson'
+      - './Avito/server/statJson:/app/server/statJson'
+
+  cron:
+    container_name: cron
+    build:
+      context: ./Cron
+      dockerfile: Dockerfile
+    command: npm start
+    env_file:
+      - .env
+    restart: always
+
+  email:
+    container_name: email
+    build:
+      context: ./Email
+      dockerfile: Dockerfile
+    command: npm start
+    env_file:
+      - .env
+    restart: always
+
+  google:
+    container_name: google
+    build:
+      context: ./Google
+      dockerfile: Dockerfile
+    command: npm start
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - './Validator/xml-data:/app/xml-data'
+      - './Validator/table-data:/app/table-data'
+    mem_limit: "4g"
+    mem_reservation: "4000m"
+    cpus: "2"
+    cpuset: "3"
+
+  mongo-server:
+    container_name: mongo-server
+    build:
+      context: ./Mongo
+      dockerfile: Dockerfile
+    command: npm start
+    env_file:
+      - .env
+    restart: always
+    depends_on:
+      - mongo-db
+
+  mongo-db:
+    container_name: mongo-db
+    image: mongo:4.4.6
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - './Mongo/data:/data/db'
+    ports:
+      - "27017:27017"
+
+  nginx:
+    container_name: nginx
+    build:
+        context: ./Nginx
+        dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./Nginx/ssl:/etc/nginx/ssl"
+    depends_on:
+      - validator
+      
+  tinkoff:
+    container_name: tinkoff
+    build:
+      context: ./Tinkoff
+      dockerfile: Dockerfile
+    command: npm start
+    env_file:
+      - .env
+    restart: always
+
+  validator:
+    container_name: validator
+    build:
+      context: ./Validator
+      dockerfile: Dockerfile
+    command: npm start
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - './Validator/xml-data:/app/xml-data'
+      - './Validator/table-data:/app/table-data'
+      - './Validator/images:/app/images'
+
+  yandex:
+    container_name: yandex
+    build:
+      context: ./Yandex
+      dockerfile: Dockerfile
+    command: npm start
+    env_file:
+      - .env
+    restart: always
+
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+     - '${DOZZLE_PORT}:8080'
